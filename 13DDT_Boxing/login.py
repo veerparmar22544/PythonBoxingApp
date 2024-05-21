@@ -1,20 +1,19 @@
 from tkinter import *
 from tkinter import messagebox
-from boxing_app import Boxing_App  # Import your main application class
+from boxing_app import Boxing_App  # Ensure this import is correct
+from database import verify_user  # Import the verify_user function
 
 def Ok():
     uname = e1.get()
     password = e2.get()
 
-    if (uname == "" and password == ""):
+    if uname == "" and password == "":
         messagebox.showinfo("", "Blank Not allowed")
-
-    elif (uname == "Admin" and password == "123"):
+    elif verify_user(uname, password):
         messagebox.showinfo("", "Login Success")
         root.destroy()  # Close the login window
         app = Boxing_App()  # Launch the main application
         app.mainloop()  # Start the main application's event loop
-
     else:
         messagebox.showinfo("", "Incorrect Username and Password")
 
