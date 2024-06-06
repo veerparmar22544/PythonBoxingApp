@@ -1,7 +1,7 @@
 import tkinter as tk
 from calorie_counter import CalorieCounter
 from practice import Practice
-from community_forum import CommunityForum
+from stats import Stats
 
 # Main Application Class
 class Boxing_App(tk.Tk):
@@ -23,13 +23,13 @@ class Boxing_App(tk.Tk):
         nav_frame.pack(side="top", fill="x")
         tk.Button(nav_frame, text="Calorie Counter", command=lambda: self.show_page("CalorieCounter")).pack(side="left", fill="both", expand=1)
         tk.Button(nav_frame, text="Practice", command=lambda: self.show_page("Practice")).pack(side="left", fill="both", expand=1)
-        tk.Button(nav_frame, text="Community", command=lambda: self.show_page("CommunityForum")).pack(side="left", fill="both", expand=1)
+        tk.Button(nav_frame, text="Stats", command=lambda: self.show_page("Stats")).pack(side="left", fill="both", expand=1)
 
     def create_pages(self):
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
 
-        for F in (CalorieCounter, Practice, CommunityForum):
+        for F in (CalorieCounter, Practice, Stats):
             page = F(container)
             self.pages[F.__name__] = page.frame
             page.frame.grid(row=0, column=0, sticky="nsew")
@@ -37,3 +37,7 @@ class Boxing_App(tk.Tk):
     def show_page(self, page_name):
         frame = self.pages[page_name]
         frame.tkraise()
+
+if __name__ == "__main__":
+    app = Boxing_App()
+    app.mainloop()
