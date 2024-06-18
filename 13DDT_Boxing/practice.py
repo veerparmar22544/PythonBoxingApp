@@ -1,17 +1,17 @@
 import tkinter as tk
+from tkinter import messagebox
 import time
-
+from database import add_practice_log, get_practice_logs
 
 class Practice:
-    def __init__(self, container):
+    def __init__(self, container, user_id):
+        self.user_id = user_id
         self.frame = tk.Frame(container)
         self.frame.grid(row=0, column=0, sticky="nsew")  # Use grid here
 
         # Title and Description
-        tk.Label(self.frame, text="Practice Session", font=("Helvetica", 16)).grid(row=0, column=0, columnspan=2,
-                                                                                   pady=10)
-        tk.Label(self.frame, text="Log your practice sessions and visualize your techniques.",
-                 font=("Helvetica", 12)).grid(row=1, column=0, columnspan=2, pady=5)
+        tk.Label(self.frame, text="Practice Session", font=("Helvetica", 16)).grid(row=0, column=0, columnspan=2, pady=10)
+        tk.Label(self.frame, text="Log your practice sessions and visualize your techniques.", font=("Helvetica", 12)).grid(row=1, column=0, columnspan=2, pady=5)
 
         # Timer
         self.time_label = tk.Label(self.frame, text="00:00:00", font=("Helvetica", 40))
@@ -28,6 +28,10 @@ class Practice:
         self.log_label.grid(row=4, column=0, columnspan=2, pady=5)
         self.log_text = tk.Text(self.frame, width=50, height=10)
         self.log_text.grid(row=5, column=0, columnspan=2, pady=10)
+
+        # Save Log Button
+        self.save_button = tk.Button(self.frame, text="Save Log", command=self.save_log)
+        self.save_button.grid(row=6, column=0, columnspan=2, pady=10)
 
     def toggle_timer(self):
         if self.running:
@@ -47,8 +51,9 @@ class Practice:
             self.time_label.config(text=f"{hours:02}:{minutes:02}:{seconds:02}")
             self.frame.after(1000, self.update_timer)
 
-#testing purposes
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = Practice(root)
-    root.mainloop()
+    def save_log(self):
+        log_text = self.log_text.get("1.0", tk.END).strip()
+        if log_text:
+            add_practice_log(user_id=self.user_id, log_text=log_text)
+            self.log_text.delete("1.0", tk.END)
+            messagebox.showinfo("Info", "Log saved successfully!")

@@ -3,10 +3,10 @@ from calorie_counter import CalorieCounter
 from practice import Practice
 from stats import Stats
 
-# Main Application Class
 class Boxing_App(tk.Tk):
-    def __init__(self, app_name="Boxing App"):
+    def __init__(self, user_id, app_name="Boxing App"):
         super().__init__()
+        self.user_id = user_id
         self.app_name = app_name
         self.setup()
 
@@ -29,15 +29,22 @@ class Boxing_App(tk.Tk):
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
 
-        for F in (CalorieCounter, Practice, Stats):
+        # Initialize CalorieCounter and Stats without user_id
+        for F in (CalorieCounter, Stats):
             page = F(container)
             self.pages[F.__name__] = page.frame
             page.frame.grid(row=0, column=0, sticky="nsew")
+
+        # Initialize Practice with user_id
+        practice_page = Practice(container, user_id=self.user_id)
+        self.pages["Practice"] = practice_page.frame
+        practice_page.frame.grid(row=0, column=0, sticky="nsew")
 
     def show_page(self, page_name):
         frame = self.pages[page_name]
         frame.tkraise()
 
 if __name__ == "__main__":
-    app = Boxing_App()
+    # Example user_id for testing
+    app = Boxing_App(user_id=1)
     app.mainloop()

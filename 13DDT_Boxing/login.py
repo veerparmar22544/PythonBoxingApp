@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from boxing_app import Boxing_App  # Ensure this import is correct
-from database import verify_user  # Import the verify_user function
+from database import verify_user, get_user_id  # Import the verify_user and get_user_id functions
 
 def Ok():
     uname = e1.get()
@@ -12,8 +12,12 @@ def Ok():
     elif verify_user(uname, password):
         messagebox.showinfo("", "Login Success")
         root.destroy()  # Close the login window
-        app = Boxing_App()  # Launch the main application
-        app.mainloop()  # Start the main application's event loop
+        user_id = get_user_id(uname)  # Retrieve the user ID
+        if user_id:
+            app = Boxing_App(user_id=user_id)  # Launch the main application with the user_id
+            app.mainloop()  # Start the main application's event loop
+        else:
+            messagebox.showerror("Error", "Failed to retrieve user ID")
     else:
         messagebox.showinfo("", "Incorrect Username and Password")
 
@@ -34,5 +38,3 @@ e2.config(show="*")
 Button(root, text="Login", command=Ok, height=3, width=13).place(x=10, y=100)
 
 root.mainloop()
-
-
