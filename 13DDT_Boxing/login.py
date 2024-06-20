@@ -10,14 +10,11 @@ def Ok():
     if uname == "" and password == "":
         messagebox.showinfo("", "Blank Not allowed")
     elif verify_user(uname, password):
+        user_id = get_user_id(uname)
         messagebox.showinfo("", "Login Success")
         root.destroy()  # Close the login window
-        user_id = get_user_id(uname)  # Retrieve the user ID
-        if user_id:
-            app = Boxing_App(user_id=user_id)  # Launch the main application with the user_id
-            app.mainloop()  # Start the main application's event loop
-        else:
-            messagebox.showerror("Error", "Failed to retrieve user ID")
+        app = Boxing_App(user_id=user_id)  # Launch the main application with the user_id
+        app.mainloop()  # Start the main application's event loop
     else:
         messagebox.showinfo("", "Incorrect Username and Password")
 

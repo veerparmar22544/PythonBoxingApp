@@ -1,17 +1,17 @@
 import tkinter as tk
-from tkinter import messagebox
 import time
-from database import add_practice_log, get_practice_logs
+from database import add_practice_log  # Add this function in database.py
 
 class Practice:
     def __init__(self, container, user_id):
         self.user_id = user_id
         self.frame = tk.Frame(container)
-        self.frame.grid(row=0, column=0, sticky="nsew")  # Use grid here
+        self.frame.grid(row=0, column=0, sticky="nsew")
 
         # Title and Description
         tk.Label(self.frame, text="Practice Session", font=("Helvetica", 16)).grid(row=0, column=0, columnspan=2, pady=10)
-        tk.Label(self.frame, text="Log your practice sessions and visualize your techniques.", font=("Helvetica", 12)).grid(row=1, column=0, columnspan=2, pady=5)
+        tk.Label(self.frame, text="Log your practice sessions and visualize your techniques.",
+                 font=("Helvetica", 12)).grid(row=1, column=0, columnspan=2, pady=5)
 
         # Timer
         self.time_label = tk.Label(self.frame, text="00:00:00", font=("Helvetica", 40))
@@ -30,8 +30,8 @@ class Practice:
         self.log_text.grid(row=5, column=0, columnspan=2, pady=10)
 
         # Save Log Button
-        self.save_button = tk.Button(self.frame, text="Save Log", command=self.save_log)
-        self.save_button.grid(row=6, column=0, columnspan=2, pady=10)
+        self.save_log_button = tk.Button(self.frame, text="Save Log", command=self.save_log)
+        self.save_log_button.grid(row=6, column=0, columnspan=2, pady=10)
 
     def toggle_timer(self):
         if self.running:
@@ -54,6 +54,5 @@ class Practice:
     def save_log(self):
         log_text = self.log_text.get("1.0", tk.END).strip()
         if log_text:
-            add_practice_log(user_id=self.user_id, log_text=log_text)
+            add_practice_log(self.user_id, log_text)
             self.log_text.delete("1.0", tk.END)
-            messagebox.showinfo("Info", "Log saved successfully!")
