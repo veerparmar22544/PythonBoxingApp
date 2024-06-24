@@ -30,7 +30,6 @@ class Boxing_App(tk.Tk):
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
 
-        # Pass user_id to each page class
         for F in (CalorieCounter, Practice, Stats):
             page = F(container, user_id=self.user_id)
             self.pages[F.__name__] = page.frame
@@ -39,3 +38,7 @@ class Boxing_App(tk.Tk):
     def show_page(self, page_name):
         frame = self.pages[page_name]
         frame.tkraise()
+
+if __name__ == "__main__":
+    app = Boxing_App(user_id=1)  # For testing purposes, replace with actual user_id
+    app.mainloop()

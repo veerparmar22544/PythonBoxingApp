@@ -1,6 +1,6 @@
 import tkinter as tk
 import time
-from database import add_practice_log  # Add this function in database.py
+from database import add_practice_log
 
 class Practice:
     def __init__(self, container, user_id):
@@ -10,8 +10,7 @@ class Practice:
 
         # Title and Description
         tk.Label(self.frame, text="Practice Session", font=("Helvetica", 16)).grid(row=0, column=0, columnspan=2, pady=10)
-        tk.Label(self.frame, text="Log your practice sessions and visualize your techniques.",
-                 font=("Helvetica", 12)).grid(row=1, column=0, columnspan=2, pady=5)
+        tk.Label(self.frame, text="Log your practice sessions and visualize your techniques.", font=("Helvetica", 12)).grid(row=1, column=0, columnspan=2, pady=5)
 
         # Timer
         self.time_label = tk.Label(self.frame, text="00:00:00", font=("Helvetica", 40))
@@ -30,8 +29,8 @@ class Practice:
         self.log_text.grid(row=5, column=0, columnspan=2, pady=10)
 
         # Save Log Button
-        self.save_log_button = tk.Button(self.frame, text="Save Log", command=self.save_log)
-        self.save_log_button.grid(row=6, column=0, columnspan=2, pady=10)
+        self.log_button = tk.Button(self.frame, text="Save Log", command=self.save_log)
+        self.log_button.grid(row=6, column=0, columnspan=2, pady=10)
 
     def toggle_timer(self):
         if self.running:
@@ -56,3 +55,10 @@ class Practice:
         if log_text:
             add_practice_log(self.user_id, log_text)
             self.log_text.delete("1.0", tk.END)
+            print("Log saved")
+
+# Testing purposes
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Practice(root, user_id=1)
+    root.mainloop()
