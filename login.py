@@ -11,6 +11,9 @@ def Ok():
     if uname == "" and password == "":
         # Show a message box if both fields are blank
         messagebox.showinfo("", "Blank Not allowed")
+    elif len(password) < 2 or len(password) > 5:
+        # Check if the password length is within the boundary
+        messagebox.showinfo("", "Password must be between 2 and 5 characters")
     elif verify_user(uname, password):
         # Verify the username and password
         user_id = get_user_id(uname)  # Get the user ID associated with the username
