@@ -1,0 +1,19 @@
+(.venv) (base) veerparmar@MacBook-Air-90 13DDT_Boxing % pip freeze
+altgraph==0.17.4
+macholib==1.16.3
+modulegraph==0.19.6
+packaging==24.1
+pillow==10.4.0
+py2app==0.28.8
+setuptools==72.1.0
+(.venv) (base) veerparmar@MacBook-Air-90 13DDT_Boxing %
+
+
+
+
+
+
+
+
+
+
